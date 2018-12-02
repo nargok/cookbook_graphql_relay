@@ -8,13 +8,15 @@ from graphene_django.filter import DjangoFilterConnectionField
 from books.models import Book
 
 class BookNode(DjangoObjectType):
-  model = Book
-  filter_fields = {
-    'title': ['exact', 'istartswith'],
-    'isbn': ['exact'],
-    'category': ['exact', 'icontains', 'istartswith'],
-  }
-  interfaces = (relay.Node,)
+
+  class Meta:
+    model = Book
+    filter_fields = {
+      'title': ['exact', 'istartswith'],
+      'isbn': ['exact'],
+      'category': ['exact', 'icontains', 'istartswith'],
+    }
+    interfaces = (relay.Node,)
 
 class Query(ObjectType):
   books = relay.Node.Field(BookNode)
