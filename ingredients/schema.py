@@ -1,3 +1,4 @@
+import graphene
 from graphene import relay, ObjectType
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
@@ -27,3 +28,9 @@ class Query(object):
 
   ingredient = relay.Node.Field(IngredientNode)
   all_ingredients = DjangoFilterConnectionField(IngredientNode)
+
+  # TODO テスト用のQueryを追加 後で消す
+  hello = graphene.String(argument=graphene.String(default_value='stranger'))
+
+  def resolve_hello(self, info, argument):
+    return 'Hello, ' + argument
